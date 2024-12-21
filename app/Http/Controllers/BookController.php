@@ -10,12 +10,12 @@ class BookController extends Controller
     public function index()
     {
         $books = Book::all();
-        return response()->json($books);
+        return view('library.books.index', compact('books'));
     }
 
     public function create()
     {
-        // Render form creation view if needed.
+        return view('library.books.create');
     }
 
     public function store(Request $request)
@@ -28,20 +28,21 @@ class BookController extends Controller
             'quantity' => 'required|integer|min:0',
         ]);
 
-        $book = Book::create($validated);
+        Book::create($validated);
 
-        return response()->json(['message' => 'Book created successfully', 'book' => $book], 201);
+        return redirect()->route('books.index')->with('success', 'Book added successfully.');
     }
 
     public function show($id)
     {
         $book = Book::findOrFail($id);
-        return response()->json($book);
+        return view('library.books.show', compact('book'));
     }
 
     public function edit($id)
     {
-        // Render edit form view if needed.
+        $book = Book::findOrFail($id);
+        return view('library.books.edit', compact('book'));
     }
 
     public function update(Request $request, $id)
@@ -57,7 +58,7 @@ class BookController extends Controller
         $book = Book::findOrFail($id);
         $book->update($validated);
 
-        return response()->json(['message' => 'Book updated successfully', 'book' => $book]);
+        return redirect()->route('books.index')->with('success', 'Book updated successfully.');
     }
 
     public function destroy($id)
@@ -65,6 +66,6 @@ class BookController extends Controller
         $book = Book::findOrFail($id);
         $book->delete();
 
-        return response()->json(['message' => 'Book deleted successfully']);
+        return redirect()->route('books.index')->with('success', 'Book deleted successfully.');
     }
 }

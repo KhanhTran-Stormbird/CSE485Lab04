@@ -10,12 +10,12 @@ class ReaderController extends Controller
     public function index()
     {
         $readers = Reader::all();
-        return response()->json($readers);
+        return view('library.readers.index', compact('readers'));
     }
 
     public function create()
     {
-        // Render form creation view if needed.
+        return view('library.readers.create');
     }
 
     public function store(Request $request)
@@ -27,20 +27,21 @@ class ReaderController extends Controller
             'phone' => 'required|string|max:15|unique:readers,phone',
         ]);
 
-        $reader = Reader::create($validated);
+        Reader::create($validated);
 
-        return response()->json(['message' => 'Reader created successfully', 'reader' => $reader], 201);
+        return redirect()->route('readers.index')->with('success', 'Reader added successfully.');
     }
 
     public function show($id)
     {
         $reader = Reader::findOrFail($id);
-        return response()->json($reader);
+        return view('library.readers.show', compact('reader'));
     }
 
     public function edit($id)
     {
-        // Render edit form view if needed.
+        $reader = Reader::findOrFail($id);
+        return view('library.readers.edit', compact('reader'));
     }
 
     public function update(Request $request, $id)
@@ -55,7 +56,7 @@ class ReaderController extends Controller
         $reader = Reader::findOrFail($id);
         $reader->update($validated);
 
-        return response()->json(['message' => 'Reader updated successfully', 'reader' => $reader]);
+        return redirect()->route('readers.index')->with('success', 'Reader updated successfully.');
     }
 
     public function destroy($id)
@@ -63,6 +64,6 @@ class ReaderController extends Controller
         $reader = Reader::findOrFail($id);
         $reader->delete();
 
-        return response()->json(['message' => 'Reader deleted successfully']);
+        return redirect()->route('readers.index')->with('success', 'Reader deleted successfully.');
     }
 }

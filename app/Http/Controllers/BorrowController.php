@@ -12,12 +12,14 @@ class BorrowController extends Controller
     public function index()
     {
         $borrows = Borrow::with('book', 'reader')->get();
-        return response()->json($borrows);
+        return view('library.borrows.index', compact('borrows'));
     }
 
     public function create()
     {
-        // Render form creation view if needed.
+        $books = Book::all();
+        $readers = Reader::all();
+        return view('library.borrows.create', compact('books', 'readers'));
     }
 
     public function store(Request $request)
@@ -30,20 +32,23 @@ class BorrowController extends Controller
             'status' => 'required|boolean',
         ]);
 
-        $borrow = Borrow::create($validated);
+        Borrow::create($validated);
 
-        return response()->json(['message' => 'Borrow record created successfully', 'borrow' => $borrow], 201);
+        return redirect()->route('borrows.index')->with('success', 'Borrow record created successfully.');
     }
 
     public function show($id)
     {
         $borrow = Borrow::with('book', 'reader')->findOrFail($id);
-        return response()->json($borrow);
+        return view('library.borrows.show', compact('borrow'));
     }
 
     public function edit($id)
     {
-        // Render edit form view if needed.
+        $borrow = Borrow::findOrFail($id);
+        $books = Book::all();
+        $readers = Reader::all();
+        return view('library.borrows.edit', compact('borrow', 'books', 'readers'));
     }
 
     public function update(Request $request, $id)
@@ -59,7 +64,7 @@ class BorrowController extends Controller
         $borrow = Borrow::findOrFail($id);
         $borrow->update($validated);
 
-        return response()->json(['message' => 'Borrow record updated successfully', 'borrow' => $borrow]);
+        return redirect()->route('borrows.index')->with('success', 'Borrow record updated successfully.');
     }
 
     public function destroy($id)
@@ -67,6 +72,6 @@ class BorrowController extends Controller
         $borrow = Borrow::findOrFail($id);
         $borrow->delete();
 
-        return response()->json(['message' => 'Borrow record deleted successfully']);
+        return redirect()->route('borrows.index')->with('success', 'Borrow record deleted successfully.');
     }
 }
