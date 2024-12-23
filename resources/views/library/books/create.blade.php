@@ -3,7 +3,9 @@
 @section('content')
     <div class="container">
         <h1>Add New Book</h1>
-        <form action="store.php" method="POST">
+        <!-- Sử dụng route của Laravel -->
+        <form action="{{ route('books.store') }}" method="POST">
+            @csrf <!-- Bảo mật bằng CSRF token -->
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
                 <input type="text" class="form-control" id="name" name="name" required>
