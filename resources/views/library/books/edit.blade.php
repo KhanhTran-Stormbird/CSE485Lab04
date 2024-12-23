@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Book</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+@extends('library.layouts.app')
+
+@section('content')
     <div class="container">
         <h1>Edit Book</h1>
         <form action="update.php" method="POST">
@@ -34,5 +28,4 @@
             <button type="submit" class="btn btn-primary">Save</button>
         </form>
     </div>
-</body>
-</html>
+@endsection
