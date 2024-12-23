@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h1>Edit Borrow</h1>
-        <form action="update.php" method="POST">
+        <form action="{{ route('books.update', $book->id) }}" method="POST">
             <input type="hidden" name="id" value="<?= $borrow->id ?>">
             <div class="mb-3">
                 <label for="reader_id" class="form-label">Reader</label>
