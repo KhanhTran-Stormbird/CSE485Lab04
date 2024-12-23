@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Routing\Controller;
 use App\Models\Borrow;
 use App\Models\Book;
 use App\Models\Reader;
