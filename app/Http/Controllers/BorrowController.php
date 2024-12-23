@@ -51,6 +51,7 @@ class BorrowController extends Controller
         return view('library.borrows.edit', compact('borrow', 'books', 'readers'));
     }
 
+
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
