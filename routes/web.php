@@ -6,7 +6,7 @@ use App\Http\Controllers\ReaderController;
 use App\Http\Controllers\BorrowController;
 
 Route::get('/', function () {
-    return view('library.layouts.app');  // Adjust based on your actual layout location
+    return view('library.layouts.app');
 });
 
 Route::resource('books', BookController::class);
